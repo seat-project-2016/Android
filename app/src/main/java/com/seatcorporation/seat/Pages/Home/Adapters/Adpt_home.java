@@ -29,7 +29,7 @@ public class Adpt_home extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public Adpt_home(Context context, List<ItemObjects> itemList) {
         this.itemList = itemList;
-        this.context = context;
+        this.context = context;//
     }
 
     @Override
