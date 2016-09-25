@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".UI.Activities.ActSplash"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/rootView">
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/img"
+        android:scaleType = "center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/black" >
+
+        </com.flaviofaria.kenburnsview.KenBurnsView>
+
+    <ImageView
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:id="@+id/imageView"
+        android:background="@drawable/logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="129dp" />
+
+
+</RelativeLayout>
