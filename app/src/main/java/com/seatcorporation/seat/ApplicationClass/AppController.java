@@ -17,7 +17,7 @@ public class AppController extends Application {
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
-        mInstance = this;
+        mInstance = this;////
     }
 
     @Override
