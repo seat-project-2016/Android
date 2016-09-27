@@ -1,6 +1,8 @@
 package com.seatcorporation.seat.Pages.Splash.Presenters;
 
 
+import com.seatcorporation.seat.ApplicationClass.AppController;
+import com.seatcorporation.seat.Constants.ConstantsSharedPreferences;
 import com.seatcorporation.seat.Pages.Splash.Interfaces.IntSplashView;
 import com.seatcorporation.seat.UI.Activities.ActSplash;
 
@@ -34,6 +36,17 @@ public class PresenterSplash  {
         }catch (Exception ex){
             ex.printStackTrace();
             view.splashFailure(ex.getMessage());
+        }
+
+    }
+
+    public void isUserRegistered(){
+        if(AppController.getSharedPreferences().getBoolean(ConstantsSharedPreferences.BOOL_IS_USER_REGISTERED,false)){
+            //Existing User
+            view.isUserRegestered(true);
+        }else{
+            //New user
+            view.isUserRegestered(false);
         }
 
     }

@@ -35,8 +35,9 @@ public class ActSplash extends AppCompatActivity implements IntSplashView {
     @Override
     public void splashSuccess() {
         //Proceed to next screen
-        UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
-        finish();
+        presenter.isUserRegistered();
+        /*UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
+        finish();*/
     }
 
     @Override
@@ -44,4 +45,17 @@ public class ActSplash extends AppCompatActivity implements IntSplashView {
         //Stay in the current screen
         UtilSnackbar.showSnakbarTypeOne(rootView,message);
     }
+
+    @Override
+    public void isUserRegestered(boolean isRegd) {
+        if(isRegd){
+            //Existing User
+            UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActHome.class);
+        }else{
+            //New User
+            UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
+        }
+    }
+
+
 }

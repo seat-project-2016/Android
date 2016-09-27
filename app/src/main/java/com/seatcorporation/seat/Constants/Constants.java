@@ -14,4 +14,10 @@ public class Constants {
     public static final int RATIO = 4/3;
     public static final int INTENT_REQUEST_GET_N_IMAGES = 14;
 
+    public static final String BaseURL="http://ec2-52-27-151-189.us-west-2.compute.amazonaws.com:8080/";
+
+
+    //-----------------------TIMEOUT-IN-SECONDS----------------------------------//
+    public static final int mTimeOut = 10;
+
 }
