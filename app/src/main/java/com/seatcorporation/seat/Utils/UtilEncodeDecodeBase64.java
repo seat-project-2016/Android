@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class UtilEncodeDecodeBase64 {
 
+    public static Bitmap scaledBitmap = null;
 
     /**********************************
      * ConvertIntoBase64Image
@@ -42,13 +43,48 @@ public class UtilEncodeDecodeBase64 {
      **/
     public static String encodeImageToBase64(String uriString) {
 
-        Bitmap bm = BitmapFactory.decodeFile(uriString);
+        Bitmap bm = BitmapFactory.decodeFile(uriString.substring(7));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
         byte[] byteArrayImage = baos.toByteArray();
         //Log.d("BASE-ENCODED-***",Base64.encodeToString(byteArrayImage, Base64.DEFAULT));
         return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+        /*String encodedPortfolioImg = null;
+        try {
+            String filePath = uriString;
+            if (filePath != null) {
+                scaledBitmap = null;
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(filePath, options);
+                options.inSampleSize = calculateInSampleSize(options, Constants.REQ_WIDTH, Constants.REQ_HEIGHT);
+                options.inJustDecodeBounds = false;
+                options.inPurgeable = true;
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                scaledBitmap = BitmapFactory.decodeFile(filePath.substring(7), options);
+                encodedPortfolioImg = getEncoded64ImageStringFromBitmap(scaledBitmap);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+
+        return encodedPortfolioImg;*/
+
+    }
+
+
+    public static String getEncoded64ImageStringFromBitmap(Bitmap bitmap) throws Exception {
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+            byte[] byteFormat = stream.toByteArray();
+            // get the base 64 string
+            String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+            return imgString;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 

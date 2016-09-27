@@ -71,6 +71,7 @@ public class ActRegistration extends AppCompatActivity implements IntRegistratio
 
     @Override
     public void validationPasswordSuccess() {
+        presenter.storeCredentials(edt_name_id.getText().toString(),edt_phone_id.getText().toString());
         startActivity(new Intent(getApplicationContext(), ActHome.class));
     }
 }

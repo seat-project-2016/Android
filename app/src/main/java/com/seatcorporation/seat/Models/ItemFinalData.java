@@ -10,6 +10,12 @@ public class ItemFinalData {
     private String content;
     private String proofname;
 
+    public ItemFinalData(String name, String content, String proofname) {
+        this.name = name;
+        this.content = content;
+        this.proofname = proofname;
+    }
+
 
     public String getName() {
         return name;

@@ -9,12 +9,14 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.seatcorporation.seat.Constants.Constants;
 import com.seatcorporation.seat.Constants.RequestCodes;
+import com.seatcorporation.seat.Models.ItemFinalData;
 import com.seatcorporation.seat.Models.ItemObjects;
 import com.seatcorporation.seat.Pages.Home.Adapters.AdptDocNames;
 import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
@@ -22,6 +24,7 @@ import com.seatcorporation.seat.Pages.Home.Interfaces.IntHomeView;
 import com.seatcorporation.seat.Pages.Home.Validations.ValHome;
 import com.seatcorporation.seat.R;
 import com.seatcorporation.seat.UI.Activities.ActHome;
+import com.seatcorporation.seat.Utils.UtilEncodeDecodeBase64;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -47,6 +50,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
 
     ValHome mValHome;
 
+    List<ItemFinalData> mFinalData;
+
 
     public PresenterHome(ActHome view, Spinner spnDocsId) {
 
@@ -54,6 +59,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
         this.view=view;
         this.context=view;
         this.spnDocsId=spnDocsId;
+
+        mFinalData=new LinkedList<>();
 
         //Presentation Logic
         initPresenter();
@@ -195,7 +202,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
             spnDocsId.setSelection(0);
 
            // new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), R.mipmap.ic_launcher)
-            //new AsyncImageCompression(context, getImageUriLoc(), ActProfile.this).execute("");
+           // new AsyncImageCompression(context, getImageUriLoc(), ActProfile.this).execute("");
         }
     }
 
@@ -234,9 +241,25 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
         }else{
             //Continue with the flow
 
+
+
+
+               for(int pos=0;pos<listViewItems.size();pos++){
+                   ItemObjects mObj=listViewItems.get(pos);
+                   ItemFinalData mFinal=new ItemFinalData(mObj.getName()+".png", UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
+                   mFinalData.add(mFinal);
+               }
+
+
+            Log.d("",mFinalData.toString());
+
+
         }
 
     }
+
+
+
 
     public void addDocument(int position) {
         //Add document on Row click
