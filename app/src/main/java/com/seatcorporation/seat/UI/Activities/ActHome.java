@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.seatcorporation.seat.Constants.Constants;
 import com.seatcorporation.seat.Pages.Home.Adapters.AdptDocNames;
@@ -16,9 +16,11 @@ import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
 import com.seatcorporation.seat.Pages.Home.Interfaces.IntHomeView;
 import com.seatcorporation.seat.Pages.Home.Presenters.PresenterHome;
 import com.seatcorporation.seat.R;
+import com.seatcorporation.seat.Utils.UtilSnackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Devrath on 10-09-2016.
@@ -28,6 +30,9 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
     @BindView(R.id.spnDocsId) Spinner spnDocsId;
     @BindView(R.id.btnUpload) Button btnUpload;
     @BindView(R.id.grid_view) RecyclerView grid_view;
+    @BindView(R.id.rootView) LinearLayout rootView;
+
+
     PresenterHome presenter;
 
     @Override
@@ -49,6 +54,16 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
     }
 
+
+    @OnClick(R.id.btnUpload)
+    public void uploadData() {
+
+        //Start Upload Process
+        presenter.uploadData();
+
+    }
+
+
     @Override
     public void selectImage() {
         Intent inten=new Intent(this, ActProfileImageSelection.class);
@@ -57,7 +72,7 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
     @Override
     public void noImageSelected() {
-        Toast.makeText(this, getResources().getString(R.string.noImageSelected), Toast.LENGTH_LONG).show();
+        UtilSnackbar.showSnakbarTypeOne(rootView,getResources().getString(R.string.noImageSelected));
     }
 
     @Override
@@ -83,6 +98,11 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         //grid_view.data
     }
 
+    @Override
+    public void displayTheProofNameToBeShown(String mName) {
+        UtilSnackbar.showSnakbarTypeOne(rootView,"Please add " + mName);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
@@ -94,12 +114,14 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
             }
         }
 
-
     }
 
     public  void deleteDocument(int position) {
-
         presenter.deleteDocument(position);
+    }
+
+    public  void addDocument(int position) {
+        presenter.addDocument(position);
     }
 
 

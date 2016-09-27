@@ -1,12 +1,15 @@
 
 package com.seatcorporation.seat.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MasterData {
+public class MasterData implements Parcelable{
 
     @SerializedName("phone_number")
     @Expose
@@ -23,6 +26,26 @@ public class MasterData {
     @SerializedName("documents")
     @Expose
     private List<Document> documents = new ArrayList<Document>();
+
+    protected MasterData(Parcel in) {
+        phoneNumber = in.readString();
+        name = in.readString();
+        deviceId = in.readString();
+        osType = in.readString();
+        documents = in.createTypedArrayList(Document.CREATOR);
+    }
+
+    public static final Creator<MasterData> CREATOR = new Creator<MasterData>() {
+        @Override
+        public MasterData createFromParcel(Parcel in) {
+            return new MasterData(in);
+        }
+
+        @Override
+        public MasterData[] newArray(int size) {
+            return new MasterData[size];
+        }
+    };
 
     /**
      * 
@@ -114,4 +137,17 @@ public class MasterData {
         this.documents = documents;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(phoneNumber);
+        dest.writeString(name);
+        dest.writeString(deviceId);
+        dest.writeString(osType);
+        dest.writeTypedList(documents);
+    }
 }

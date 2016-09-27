@@ -17,4 +17,6 @@ public interface IntHomeView {
     void setUpRecyclerView(StaggeredGridLayoutManager view);
     void setGridViewDocsAdapter(Adpt_home adapter);
     void refreshRecyclerView();
+
+    void displayTheProofNameToBeShown(String mName);
 }

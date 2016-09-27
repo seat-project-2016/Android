@@ -12,7 +12,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.seatcorporation.seat.Constants.Constants;
 import com.seatcorporation.seat.Constants.RequestCodes;
@@ -20,6 +19,7 @@ import com.seatcorporation.seat.Models.ItemObjects;
 import com.seatcorporation.seat.Pages.Home.Adapters.AdptDocNames;
 import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
 import com.seatcorporation.seat.Pages.Home.Interfaces.IntHomeView;
+import com.seatcorporation.seat.Pages.Home.Validations.ValHome;
 import com.seatcorporation.seat.R;
 import com.seatcorporation.seat.UI.Activities.ActHome;
 
@@ -36,7 +36,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
     private StaggeredGridLayoutManager gridLayoutManager;
     private Adpt_home rcAdapter;
     private Activity context;
-    List<ItemObjects> gaggeredList;
+    List<ItemObjects> mList;
     Spinner spnDocsId;
     TypedArray docNames,docImgs;
     Uri mImageUriLoc=null;
@@ -44,6 +44,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
     int mDocPosition;
 
     LinkedList<ItemObjects> listViewItems;
+
+    ValHome mValHome;
 
 
     public PresenterHome(ActHome view, Spinner spnDocsId) {
@@ -55,12 +57,14 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
 
         //Presentation Logic
         initPresenter();
+        //Validation instance initilization
+        mValHome=new ValHome();
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(context, docNames.getResourceId(position,R.string.app_name), Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, docNames.getResourceId(position,R.string.app_name), Toast.LENGTH_LONG).show();
         if(position!=0)
         selectImage(position);
     }
@@ -100,14 +104,14 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
     }
 
     private void setDataForAdapter() {
-        gaggeredList = getListItemData();
+        mList = getListItemData();
     }
 
     private void staggeredViewSetup() {
         gridLayoutManager = new StaggeredGridLayoutManager(1, 1);
         view.setUpRecyclerView(gridLayoutManager);
 
-        rcAdapter = new Adpt_home(context, gaggeredList);
+        rcAdapter = new Adpt_home(context, mList);
         view.setGridViewDocsAdapter(rcAdapter);
     }
 
@@ -115,9 +119,9 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
     private List<ItemObjects> getListItemData(){
         listViewItems = new LinkedList<>();
         Uri path = Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.ic_launcher);
-        listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic),path));
-        listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), path));
-        listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), path));
+        listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic),path,false));
+        listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), path,false));
+        listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), path,false));
 
         return listViewItems;
     }
@@ -168,23 +172,21 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
         if (canServerCallBeMade) {
             if(listViewItems.size()==3){
                 if(mDocPosition==1){
-                    listViewItems.set(mDocPosition-1, new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic), getImageUriLoc()));
+                    listViewItems.set(mDocPosition-1, new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic), getImageUriLoc(),true));
                 }else if(mDocPosition==2){
-                    listViewItems.set(mDocPosition-1, new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), getImageUriLoc()));
+                    listViewItems.set(mDocPosition-1, new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), getImageUriLoc(),true));
                 }else if(mDocPosition==3){
-                    listViewItems.set(mDocPosition-1, new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), getImageUriLoc()));
+                    listViewItems.set(mDocPosition-1, new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), getImageUriLoc(),true));
                 }
             }else{
                 if(mDocPosition==1){
-                    listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic), getImageUriLoc()));
+                    listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic), getImageUriLoc(),true));
                 }else if(mDocPosition==2){
-                    listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), getImageUriLoc()));
+                    listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), getImageUriLoc(),true));
                 }else if(mDocPosition==3){
-                    listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), getImageUriLoc()));
+                    listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), getImageUriLoc(),true));
                 }
             }
-
-
 
             //Refresh GridView
             rcAdapter.notifyDataSetChanged();
@@ -192,9 +194,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
             //Reset DocName position in the spinner
             spnDocsId.setSelection(0);
 
-
            // new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), R.mipmap.ic_launcher)
-            Toast.makeText(context,getImageUriLoc().getLastPathSegment(),Toast.LENGTH_SHORT).show();
             //new AsyncImageCompression(context, getImageUriLoc(), ActProfile.this).execute("");
         }
     }
@@ -206,11 +206,41 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
 
 
     public  void deleteDocument(int position) {
-        listViewItems.remove(position);
+
+        Uri path = Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.ic_launcher);
+        if(position==0){
+            listViewItems.set(position, new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic),path,false));
+        }else if(position==1){
+            listViewItems.set(position, new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence),path,false));
+        }else if(position==2){
+            listViewItems.set(position, new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic),path,false));
+        }
+
         //Refresh GridView
-        //rcAdapter.notifyDataSetChanged();
         rcAdapter.notifyItemRemoved(position);
-        rcAdapter.notifyItemRangeChanged(position,gaggeredList.size());
+        rcAdapter.notifyItemRangeChanged(position,mList.size());
+    }
+
+
+    public void uploadData(){
+
+        if(mValHome.isProofNotAdded(listViewItems)){
+            //Show Which Address Proff is not added
+            String mData=mValHome.whichProofNotPresent(listViewItems);
+            if(!mData.equalsIgnoreCase("")){
+                //Display the Proofname
+                view.displayTheProofNameToBeShown(mData);
+            }
+        }else{
+            //Continue with the flow
+
+        }
+
+    }
+
+    public void addDocument(int position) {
+        //Add document on Row click
+        selectImage(position+1);
     }
 
 

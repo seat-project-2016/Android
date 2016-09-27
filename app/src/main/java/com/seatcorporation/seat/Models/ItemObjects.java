@@ -3,12 +3,15 @@ package com.seatcorporation.seat.Models;
 import android.net.Uri;
 
 public class ItemObjects {
+
     private String name;
     private Uri photo;
+    private boolean isDataAdded;
 
-    public ItemObjects(String name, Uri photo) {
+    public ItemObjects(String name, Uri photo, boolean isDataAdded) {
         this.name = name;
         this.photo = photo;
+        this.isDataAdded = isDataAdded;
     }
 
     public String getName() {
@@ -25,5 +28,13 @@ public class ItemObjects {
 
     public void setPhoto(Uri photo) {
         this.photo = photo;
+    }
+
+    public boolean isDataAdded() {
+        return isDataAdded;
+    }
+
+    public void setDataAdded(boolean dataAdded) {
+        isDataAdded = dataAdded;
     }
 }

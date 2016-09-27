@@ -65,9 +65,6 @@ public class Adpt_home extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.txt_doc_name.setText(mObj.getName());
         viewHolder.img_doc_pic.setImageURI(mObj.getPhoto());
 
-
-
-
         viewHolder.img_delete_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,8 +72,13 @@ public class Adpt_home extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         });
 
+        viewHolder.card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ActHome)context).addDocument(position);
 
-
+            }
+        });
 
     }
 

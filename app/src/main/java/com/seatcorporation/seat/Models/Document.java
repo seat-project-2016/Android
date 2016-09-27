@@ -1,11 +1,14 @@
 
 package com.seatcorporation.seat.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Document {
+public class Document implements Parcelable{
 
     @SerializedName("content")
     @Expose
@@ -16,6 +19,24 @@ public class Document {
     @SerializedName("proofname")
     @Expose
     private String proofname;
+
+    protected Document(Parcel in) {
+        content = in.readString();
+        name = in.readString();
+        proofname = in.readString();
+    }
+
+    public static final Creator<Document> CREATOR = new Creator<Document>() {
+        @Override
+        public Document createFromParcel(Parcel in) {
+            return new Document(in);
+        }
+
+        @Override
+        public Document[] newArray(int size) {
+            return new Document[size];
+        }
+    };
 
     /**
      * 
@@ -71,4 +92,15 @@ public class Document {
         this.proofname = proofname;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(content);
+        dest.writeString(name);
+        dest.writeString(proofname);
+    }
 }
