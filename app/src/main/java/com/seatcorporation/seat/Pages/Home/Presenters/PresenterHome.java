@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
 import com.seatcorporation.seat.Constants.Constants;
 import com.seatcorporation.seat.Constants.RequestCodes;
 import com.seatcorporation.seat.Models.ItemFinalData;
@@ -241,17 +242,17 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
         }else{
             //Continue with the flow
 
-
-
-
                for(int pos=0;pos<listViewItems.size();pos++){
                    ItemObjects mObj=listViewItems.get(pos);
                    ItemFinalData mFinal=new ItemFinalData(mObj.getName()+".png", UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
                    mFinalData.add(mFinal);
+
                }
 
 
-            Log.d("",mFinalData.toString());
+            Gson gson = new Gson();
+            String jsonStr = gson.toJson(mFinalData);
+            Log.d("",jsonStr);
 
 
         }

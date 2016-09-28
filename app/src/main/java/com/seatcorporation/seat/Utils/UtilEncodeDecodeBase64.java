@@ -43,13 +43,13 @@ public class UtilEncodeDecodeBase64 {
      **/
     public static String encodeImageToBase64(String uriString) {
 
-        Bitmap bm = BitmapFactory.decodeFile(uriString.substring(7));
+        /*Bitmap bm = BitmapFactory.decodeFile(uriString.substring(7));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
         byte[] byteArrayImage = baos.toByteArray();
         //Log.d("BASE-ENCODED-***",Base64.encodeToString(byteArrayImage, Base64.DEFAULT));
-        return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-        /*String encodedPortfolioImg = null;
+        return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);*/
+        String encodedPortfolioImg = null;
         try {
             String filePath = uriString;
             if (filePath != null) {
@@ -69,7 +69,7 @@ public class UtilEncodeDecodeBase64 {
         }
 
 
-        return encodedPortfolioImg;*/
+        return encodedPortfolioImg;
 
     }
 
