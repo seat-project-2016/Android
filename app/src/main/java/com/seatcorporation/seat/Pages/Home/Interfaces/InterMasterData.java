@@ -10,4 +10,8 @@ public interface InterMasterData {
 
     public void masterData(Bundle bundle);
 
+    public void isNewUser(boolean isNewUser);
+
+    public void registrationFailure();
+
 }

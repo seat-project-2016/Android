@@ -1,6 +1,6 @@
 package com.seatcorporation.seat.Retrofit;
 
-import com.seatcorporation.seat.Models.MasterData;
+import com.seatcorporation.seat.Models.ResponseData;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -14,9 +14,8 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
     @FormUrlEncoded
-    @POST("doctorimageupdate")
-    Call<MasterData> masterData(
-    @Field("docimage") String docimage,
+    @POST("register")
+    Call<ResponseData> masterData(
     @Field("phone_number") String phone_number,
     @Field("name") String name,
     @Field("device_id") String device_id,

@@ -6,22 +6,27 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
+import com.seatcorporation.seat.ApplicationClass.AppController;
 import com.seatcorporation.seat.Constants.Constants;
+import com.seatcorporation.seat.Constants.ConstantsSharedPreferences;
 import com.seatcorporation.seat.Constants.RequestCodes;
-import com.seatcorporation.seat.Models.ItemFinalData;
+import com.seatcorporation.seat.Models.FinalMasterData;
+import com.seatcorporation.seat.Models.ItemContentData;
 import com.seatcorporation.seat.Models.ItemObjects;
+import com.seatcorporation.seat.NetworkRequests.RetroRegistration;
 import com.seatcorporation.seat.Pages.Home.Adapters.AdptDocNames;
 import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
 import com.seatcorporation.seat.Pages.Home.Interfaces.IntHomeView;
+import com.seatcorporation.seat.Pages.Home.Interfaces.InterMasterData;
 import com.seatcorporation.seat.Pages.Home.Validations.ValHome;
 import com.seatcorporation.seat.R;
 import com.seatcorporation.seat.UI.Activities.ActHome;
@@ -34,7 +39,7 @@ import java.util.List;
 /**
  * Created by Devrath on 9/5/2016.
  */
-public class PresenterHome implements AdapterView.OnItemSelectedListener{
+public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMasterData {
 
     private IntHomeView view;
     private StaggeredGridLayoutManager gridLayoutManager;
@@ -51,7 +56,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
 
     ValHome mValHome;
 
-    List<ItemFinalData> mFinalData;
+    List<ItemContentData> mFinalData;
 
 
     public PresenterHome(ActHome view, Spinner spnDocsId) {
@@ -242,17 +247,28 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
         }else{
             //Continue with the flow
 
-               for(int pos=0;pos<listViewItems.size();pos++){
+               for(int pos=0;pos<listViewItems.size()-2;pos++){
                    ItemObjects mObj=listViewItems.get(pos);
-                   ItemFinalData mFinal=new ItemFinalData(mObj.getName()+".png", UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
+                   ItemContentData mFinal=new ItemContentData(mObj.getName()+".png", UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
                    mFinalData.add(mFinal);
 
                }
 
 
             Gson gson = new Gson();
-            String jsonStr = gson.toJson(mFinalData);
-            Log.d("",jsonStr);
+            String docData = gson.toJson(mFinalData);
+
+
+
+            FinalMasterData mData=new FinalMasterData(AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_PHONE_NUMBER,null),
+                                                      AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_USER_NAME,null),
+                                                      "",
+                                                      "Android",
+                                                      docData);
+
+
+            RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,mData);
+
 
 
         }
@@ -267,6 +283,31 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener{
         selectImage(position+1);
     }
 
+
+
+
+    @Override
+    public void masterData(Bundle bundle) {
+
+    }
+
+    @Override
+    public void isNewUser(boolean isNewUser) {
+
+        if(isNewUser==true){
+            //New User
+            view.isNewUser(true);
+        }else if(isNewUser==false){
+            //Existing User
+            view.isNewUser(false);
+        }
+
+    }
+
+    @Override
+    public void registrationFailure() {
+            view.registrationFailed();
+    }
 
 
 }

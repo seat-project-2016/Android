@@ -19,4 +19,7 @@ public interface IntHomeView {
     void refreshRecyclerView();
 
     void displayTheProofNameToBeShown(String mName);
+
+    void isNewUser(boolean isNewUser);
+    void registrationFailed();
 }

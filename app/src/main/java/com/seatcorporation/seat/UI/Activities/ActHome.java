@@ -103,6 +103,25 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         UtilSnackbar.showSnakbarTypeOne(rootView,"Please add " + mName);
     }
 
+    @Override
+    public void isNewUser(boolean isNewUser) {
+
+        if(isNewUser==true){
+            //New User
+            UtilSnackbar.showSnakbarTypeOne(rootView,"User Registered");
+        }else if(isNewUser==false){
+            //Existing User
+            UtilSnackbar.showSnakbarTypeOne(rootView,"Already Registered");
+        }
+
+    }
+
+    @Override
+    public void registrationFailed() {
+        //Registration Failed
+        UtilSnackbar.showSnakbarTypeOne(rootView,"Registration Failed");
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
