@@ -247,9 +247,10 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         }else{
             //Continue with the flow
 
-               for(int pos=0;pos<listViewItems.size()-2;pos++){
+               for(int pos=0;pos<listViewItems.size();pos++){
                    ItemObjects mObj=listViewItems.get(pos);
-                   ItemContentData mFinal=new ItemContentData(mObj.getName()+".png", UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
+                   ItemContentData mFinal=new ItemContentData(mObj.getName()+".png",
+                           UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
                    mFinalData.add(mFinal);
 
                }

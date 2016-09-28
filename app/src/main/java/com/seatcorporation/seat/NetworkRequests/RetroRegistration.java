@@ -9,6 +9,8 @@ import com.seatcorporation.seat.Pages.Home.Interfaces.InterMasterData;
 import com.seatcorporation.seat.Retrofit.ApiClient;
 import com.seatcorporation.seat.Retrofit.ApiInterface;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,8 +36,14 @@ public class RetroRegistration {
         final Bundle bundle = new Bundle();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
+        HashMap<String,String> mMap=new HashMap<>();
+        mMap.put("phone_number",mdata.getPhone_number());
+        mMap.put("name",mdata.getName());
+        mMap.put("device_id",mdata.getDevice_id());
+        mMap.put("os_type",mdata.getOs_type());
+        mMap.put("documents",mdata.getDocuments());
 
-        Call<ResponseData> call = apiService.masterData(mdata.getPhone_number(),mdata.getName(),mdata.getDevice_id(),mdata.getOs_type(),mdata.getDocuments());
+        Call<ResponseData> call = apiService.masterData(mMap);
 
 
         call.enqueue(new Callback<ResponseData>() {
