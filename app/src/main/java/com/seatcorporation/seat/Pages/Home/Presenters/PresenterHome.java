@@ -3,6 +3,7 @@ package com.seatcorporation.seat.Pages.Home.Presenters;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -57,12 +58,15 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
     ValHome mValHome;
 
     List<ItemContentData> mFinalData;
+    ProgressDialog pd;
+    Activity mActivity;
 
 
     public PresenterHome(ActHome view, Spinner spnDocsId) {
 
         //Set the user view
         this.view=view;
+        mActivity=view;
         this.context=view;
         this.spnDocsId=spnDocsId;
 
@@ -73,7 +77,17 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         //Validation instance initilization
         mValHome=new ValHome();
 
+        setUpProgress();
+
     }
+
+
+    public void setUpProgress(){
+        pd = new ProgressDialog(mActivity);
+        pd.setMessage("loading");
+    }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -267,7 +281,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
                                                       "Android",
                                                       docData);
 
-
+            pd.show();
             RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,mData);
 
 
@@ -294,6 +308,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
 
     @Override
     public void isNewUser(boolean isNewUser) {
+        pd.dismiss();
 
         if(isNewUser==true){
             //New User
@@ -307,7 +322,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
 
     @Override
     public void registrationFailure() {
-            view.registrationFailed();
+        pd.dismiss();
+        view.registrationFailed();
     }
 
 
