@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -13,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.seatcorporation.seat.Constants.Constants;
 import com.seatcorporation.seat.Models.ResponseData;
@@ -31,14 +35,19 @@ import butterknife.ButterKnife;
  */
 public class ActHome extends AppCompatActivity implements IntHomeView {
 
-    @BindView(R.id.spnDocsId) Spinner spnDocsId;
-    @BindView(R.id.btnUpload) Button btnUpload;
-    @BindView(R.id.grid_view) RecyclerView grid_view;
-    @BindView(R.id.rootView) LinearLayout rootView;
+    @BindView(R.id.spnDocsId)
+    Spinner spnDocsId;
+    @BindView(R.id.btnUpload)
+    Button btnUpload;
+    @BindView(R.id.grid_view)
+    RecyclerView grid_view;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
 
 
     PresenterHome presenter;
     Toolbar mToolbar;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,7 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         ButterKnife.bind(this);
         //Set up Toolbar
         initToolbar();
-        presenter= new PresenterHome(this,spnDocsId);
+        presenter = new PresenterHome(this, spnDocsId);
     }
 
     private void initToolbar() {
@@ -85,13 +94,13 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
     @Override
     public void selectImage() {
-        Intent inten=new Intent(this, ActProfileImageSelection.class);
+        Intent inten = new Intent(this, ActProfileImageSelection.class);
         startActivityForResult(inten, Constants.INTENT_REQUEST_GET_N_IMAGES);
     }
 
     @Override
     public void noImageSelected() {
-        UtilSnackbar.showSnakbarTypeOne(rootView,getResources().getString(R.string.noImageSelected));
+        UtilSnackbar.showSnakbarTypeOne(rootView, getResources().getString(R.string.noImageSelected));
     }
 
     @Override
@@ -112,18 +121,18 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
     @Override
     public void displayTheProofNameToBeShown(String mName) {
-        UtilSnackbar.showSnakbarTypeOne(rootView,"Please add " + mName);
+        UtilSnackbar.showSnakbarTypeOne(rootView, "Please add " + mName);
     }
 
     @Override
     public void isNewUser(boolean isNewUser, ResponseData mData) {
 
-        if(isNewUser==true){
+        if (isNewUser == true) {
             //New User
-            UtilSnackbar.showSnakbarTypeOne(rootView,mData.getErrorMessage());
-        }else if(isNewUser==false){
+            UtilSnackbar.showSnakbarTypeOne(rootView, mData.getErrorMessage());
+        } else if (isNewUser == false) {
             //Existing User
-            UtilSnackbar.showSnakbarTypeOne(rootView,mData.getErrorMessage());
+            UtilSnackbar.showSnakbarTypeOne(rootView, mData.getErrorMessage());
         }
 
     }
@@ -131,10 +140,8 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
     @Override
     public void registrationFailed() {
         //Registration Failed
-        UtilSnackbar.showSnakbarTypeOne(rootView,getResources().getString(R.string.txt_reg_failure));
+        UtilSnackbar.showSnakbarTypeOne(rootView, getResources().getString(R.string.txt_reg_failure));
     }
-
-
 
 
     @Override
@@ -149,11 +156,41 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
     }
 
-    public  void deleteDocument(int position) {
+    @Override
+    public void onBackPressed() {
+        handleExitApp();
+    }
+
+    private void handleExitApp() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        doubleBackToExitPressedOnce = true;
+        showSnackbar(getResources().getString(R.string.txt_press_back_to_exit));
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(rootView, message, Snackbar.LENGTH_SHORT);
+        snackbar.getView().setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        ((TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+
+    public void deleteDocument(int position) {
         presenter.deleteDocument(position);
     }
 
-    public  void addDocument(int position) {
+    public void addDocument(int position) {
         presenter.addDocument(position);
     }
 
