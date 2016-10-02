@@ -2,10 +2,14 @@ package com.seatcorporation.seat.UI.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -21,7 +25,6 @@ import com.seatcorporation.seat.Utils.UtilSnackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Devrath on 10-09-2016.
@@ -35,6 +38,7 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
 
     PresenterHome presenter;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +46,40 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         setContentView(R.layout.act_home);
         //Inject views from butter-knife
         ButterKnife.bind(this);
+        //Set up Toolbar
+        initToolbar();
         presenter= new PresenterHome(this,spnDocsId);
     }
 
+    private void initToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setTitle("Upload Documents");
+        mToolbar.showOverflowMenu();
+        setSupportActionBar(mToolbar);
+    }
 
-    @OnClick(R.id.btnUpload)
-    public void uploadData() {
-        //Start Upload Process
-        presenter.uploadData();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_upload) {
+            //Start Upload Process
+            presenter.uploadData();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
