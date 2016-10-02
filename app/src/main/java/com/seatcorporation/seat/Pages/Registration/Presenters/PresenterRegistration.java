@@ -1,6 +1,10 @@
 package com.seatcorporation.seat.Pages.Registration.Presenters;
 
 
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.widget.EditText;
+
 import com.seatcorporation.seat.ApplicationClass.AppController;
 import com.seatcorporation.seat.Constants.ConstantsSharedPreferences;
 import com.seatcorporation.seat.Pages.Registration.Interfaces.IntRegistrationView;
@@ -14,22 +18,33 @@ public class PresenterRegistration {
 
     private IntRegistrationView view;
     private ValRegistration mVal;
+    private String blockCharacterSet = "~#^|$%&*!";
 
     public PresenterRegistration(ActRegistration view) {
 
         //Set the user view
         this.view=view;
-        //Presentation Logic
-        initPresenter();
         //validation Logic
         mVal=new ValRegistration();
 
     }
 
-    private void initPresenter() {
-
+    public void initPresenter(EditText edt_phone_id) {
+        //edt_phone_id.setFilters(new InputFilter[] { filter });
     }
 
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 
     public void attemptRegister(String mail, String phone) {
         if(mVal.validateRegistrationEmail(mail)){

@@ -17,7 +17,7 @@ public class PresenterRegSignin {
     private IntRegSigninView view;
     CarouselView carouselView;
 
-    int[] sampleImages = {R.color.black, R.color.black, R.color.black, R.color.black, R.color.black};
+    int[] sampleImages = {R.drawable.intro_one, R.drawable.intro_two, R.drawable.intro_three};
 
 
     public PresenterRegSignin(ActRegSignin view, CarouselView carouselView) {

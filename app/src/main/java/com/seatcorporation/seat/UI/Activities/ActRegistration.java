@@ -38,6 +38,7 @@ public class ActRegistration extends AppCompatActivity implements IntRegistratio
         ButterKnife.bind(this);
 
         presenter=new PresenterRegistration(this);
+        presenter.initPresenter(edt_phone_id);
     }
 
 

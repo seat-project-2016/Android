@@ -33,9 +33,7 @@ public class ActRegSignin extends AppCompatActivity implements IntRegSigninView 
         setContentView(R.layout.act_regsignin);
         //Inject views from butter-knife
         ButterKnife.bind(this);
-
         carouselView=(CarouselView) findViewById(R.id.carouselView) ;
-
         presenter =new PresenterRegSignin(this,carouselView);
     }
 
