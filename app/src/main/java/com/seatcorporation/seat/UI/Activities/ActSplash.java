@@ -29,15 +29,18 @@ public class ActSplash extends AppCompatActivity implements IntSplashView {
         ButterKnife.bind(this);
         //Presentation Logic
         presenter=new PresenterSplash(this);
-        //Toast.makeText(ActSplash.this,"10-Second Magic",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void splashSuccess() {
-        //Proceed to next screen
-        presenter.isUserRegistered();
-        /*UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
-        finish();*/
+
+        if(presenter.isRegChkToBeDone()==true){
+            presenter.isUserRegistered();
+        }else{
+            //New User
+            UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
+        }
+
     }
 
     @Override
@@ -46,15 +49,16 @@ public class ActSplash extends AppCompatActivity implements IntSplashView {
         UtilSnackbar.showSnakbarTypeOne(rootView,message);
     }
 
+
+
     @Override
-    public void isUserRegestered(boolean isRegd) {
-        if(isRegd){
-            //Existing User
-            UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActHome.class);
-        }else{
-            //New User
-            UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
-        }
+    public void registeredCheckSuccess(boolean mVal, String mMsg) {
+        UtilActivitiesNavigation.startActivityWithClassDataWithBackStackClear(ActSplash.this, ActMessage.class,mMsg);
+    }
+
+    @Override
+    public void registeredCheckFailure() {
+        UtilActivitiesNavigation.startActivityWithBackStackClear(ActSplash.this, ActRegSignin.class);
     }
 
 

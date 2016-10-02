@@ -6,5 +6,7 @@ package com.seatcorporation.seat.Pages.Splash.Interfaces;
 public interface IntSplashView {
     void splashSuccess();
     void splashFailure(String message);
-    void isUserRegestered(boolean isRegd);
+    void registeredCheckSuccess(boolean mVal,String mMsg);
+    void registeredCheckFailure();
+
 }

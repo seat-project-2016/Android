@@ -25,6 +25,7 @@ import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
 import com.seatcorporation.seat.Pages.Home.Interfaces.IntHomeView;
 import com.seatcorporation.seat.Pages.Home.Presenters.PresenterHome;
 import com.seatcorporation.seat.R;
+import com.seatcorporation.seat.Utils.UtilActivitiesNavigation;
 import com.seatcorporation.seat.Utils.UtilSnackbar;
 
 import butterknife.BindView;
@@ -129,10 +130,13 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
 
         if (isNewUser == true) {
             //New User
-            UtilSnackbar.showSnakbarTypeOne(rootView, mData.getErrorMessage());
+            //UtilSnackbar.showSnakbarTypeOne(rootView, mData.getErrorMessage());
+            UtilActivitiesNavigation.startActivityWithClassDataWithBackStackClear(ActHome.this, ActMessage.class,mData.getErrorMessage());
         } else if (isNewUser == false) {
             //Existing User
-            UtilSnackbar.showSnakbarTypeOne(rootView, mData.getErrorMessage());
+            //UtilSnackbar.showSnakbarTypeOne(rootView, mData.getErrorMessage());
+            UtilActivitiesNavigation.startActivityWithClassDataWithBackStackClear(ActHome.this, ActMessage.class,mData.getErrorMessage());
+
         }
 
     }

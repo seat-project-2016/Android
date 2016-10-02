@@ -302,8 +302,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
 
     @Override
     public void setLocalData(String mTolken) {
-        AppController.getSharedPreferences().edit().putString(ConstantsSharedPreferences.STRING_AUTH_TOLKEN,mTolken);
-        AppController.getSharedPreferences().edit().putBoolean(ConstantsSharedPreferences.BOOL_IS_USER_REGISTERED,true);
+        AppController.getSharedPreferences().edit().putString(ConstantsSharedPreferences.STRING_AUTH_TOLKEN,mTolken).commit();
+        AppController.getSharedPreferences().edit().putBoolean(ConstantsSharedPreferences.BOOL_IS_USER_REGISTERED,true).commit();
     }
 
 

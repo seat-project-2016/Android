@@ -16,12 +16,12 @@
     <application
         android:name="com.seatcorporation.seat.ApplicationClass.AppController"
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/seat_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name=".UI.Activities.ActHome"
+        <activity android:name=".UI.Activities.ActSplash"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -49,10 +49,19 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
-        <activity android:name=".UI.Activities.ActSplash"
+        <activity android:name=".UI.Activities.ActHome"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
+
+
+        <activity android:name=".UI.Activities.ActMessage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+
+
+
 
         <meta-data
             android:name="io.fabric.ApiKey"
