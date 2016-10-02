@@ -56,6 +56,10 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4f6b8f08dc8627a590c1d3f68e7d2a078a6e4a00" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

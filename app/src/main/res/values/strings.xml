@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Seat</string>
 
+    <string name="app_name">Seat</string>
+    <string name="os_type">Android</string>
 
 
     <!-- REGSIGN SCREEN -->
@@ -8,18 +9,15 @@
     <string name="regsignin_signin">Sign In</string>
     <!-- REGSIGN SCREEN -->
 
-
     <!-- REGISTRATION SCREEN -->
     <string name="reg_hint_name">Name</string>
     <string name="reg_hint_phone">Phone</string>
     <string name="reg_btn_register">Register</string>
     <!-- REGISTRATION SCREEN -->
 
-
     <!-- CONNECTIVITY MESSAGES -->
     <string name="conn_noconnectivity">No Connectivity</string>
     <!-- CONNECTIVITY MESSAGES -->
-
 
     <!-- DOCUMENT NAMES -->
     <string name="doc_name_select">Select a document</string>
@@ -28,10 +26,12 @@
     <string name="doc_name_taxi_pic">Taxi Pic</string>
     <!-- DOCUMENT NAMES -->
 
-
     <string name="select_image">Select Image</string>
-
     <string name="noImageSelected">No image selected</string>
+
+    <string name="txt_loading">Loading</string>
+    <string name="txt_reg_failure">Registration Failure</string>
+
 
 
 </resources>

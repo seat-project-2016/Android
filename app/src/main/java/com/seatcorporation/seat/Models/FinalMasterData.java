@@ -1,5 +1,7 @@
 package com.seatcorporation.seat.Models;
 
+import java.util.List;
+
 /**
  * Created by Devrath on 28-09-2016.
  */
@@ -10,10 +12,10 @@ public class FinalMasterData {
     String name;
     String device_id;
     String os_type;
-    String documents;
+    List<ItemContentData> documents;
 
 
-    public FinalMasterData(String phone_number, String name, String device_id, String os_type, String documents) {
+    public FinalMasterData(String phone_number, String name, String device_id, String os_type, List<ItemContentData> documents) {
         this.phone_number = phone_number;
         this.name = name;
         this.device_id = device_id;
@@ -54,11 +56,11 @@ public class FinalMasterData {
         this.os_type = os_type;
     }
 
-    public String getDocuments() {
+    public List<ItemContentData> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(String documents) {
+    public void setDocuments(List<ItemContentData> documents) {
         this.documents = documents;
     }
 }

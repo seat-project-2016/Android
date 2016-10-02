@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import com.google.gson.Gson;
 import com.seatcorporation.seat.ApplicationClass.AppController;
 import com.seatcorporation.seat.Constants.Constants;
 import com.seatcorporation.seat.Constants.ConstantsSharedPreferences;
@@ -23,6 +21,7 @@ import com.seatcorporation.seat.Constants.RequestCodes;
 import com.seatcorporation.seat.Models.FinalMasterData;
 import com.seatcorporation.seat.Models.ItemContentData;
 import com.seatcorporation.seat.Models.ItemObjects;
+import com.seatcorporation.seat.Models.ResponseData;
 import com.seatcorporation.seat.NetworkRequests.RetroRegistration;
 import com.seatcorporation.seat.Pages.Home.Adapters.AdptDocNames;
 import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
@@ -52,11 +51,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
     Uri mImageUriLoc=null;
     HashSet<Uri> mMedia;
     int mDocPosition;
-
     LinkedList<ItemObjects> listViewItems;
-
     ValHome mValHome;
-
     List<ItemContentData> mFinalData;
     ProgressDialog pd;
     Activity mActivity;
@@ -84,14 +80,13 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
 
     public void setUpProgress(){
         pd = new ProgressDialog(mActivity);
-        pd.setMessage("loading");
+        pd.setMessage(context.getResources().getString(R.string.txt_loading));
     }
 
 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //Toast.makeText(context, docNames.getResourceId(position,R.string.app_name), Toast.LENGTH_LONG).show();
         if(position!=0)
         selectImage(position);
     }
@@ -145,7 +140,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
 
     private List<ItemObjects> getListItemData(){
         listViewItems = new LinkedList<>();
-        Uri path = Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.ic_launcher);
+        Uri path = Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.no_image);
         listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic),path,false));
         listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_driving_licence), path,false));
         listViewItems.add(new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), path,false));
@@ -221,8 +216,6 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
             //Reset DocName position in the spinner
             spnDocsId.setSelection(0);
 
-           // new ItemObjects(context.getResources().getString(R.string.doc_name_taxi_pic), R.mipmap.ic_launcher)
-           // new AsyncImageCompression(context, getImageUriLoc(), ActProfile.this).execute("");
         }
     }
 
@@ -234,7 +227,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
 
     public  void deleteDocument(int position) {
 
-        Uri path = Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.ic_launcher);
+        Uri path = Uri.parse("android.resource://"+context.getPackageName()+"/"+R.drawable.no_image);
         if(position==0){
             listViewItems.set(position, new ItemObjects(context.getResources().getString(R.string.doc_name_yourpic),path,false));
         }else if(position==1){
@@ -252,45 +245,42 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
     public void uploadData(){
 
         if(mValHome.isProofNotAdded(listViewItems)){
-            //Show Which Address Proff is not added
+            //Show Which Address Proof is not added
             String mData=mValHome.whichProofNotPresent(listViewItems);
             if(!mData.equalsIgnoreCase("")){
-                //Display the Proofname
+                //Display the Proof name
                 view.displayTheProofNameToBeShown(mData);
             }
         }else{
             //Continue with the flow
-
-               for(int pos=0;pos<listViewItems.size();pos++){
-                   ItemObjects mObj=listViewItems.get(pos);
-                   ItemContentData mFinal=new ItemContentData(mObj.getName()+".png",
-                           UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
-                   mFinalData.add(mFinal);
-
-               }
-
-
-            Gson gson = new Gson();
-            String docData = gson.toJson(mFinalData);
-
-
-
-            FinalMasterData mData=new FinalMasterData(AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_PHONE_NUMBER,null),
-                                                      AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_USER_NAME,null),
-                                                      "",
-                                                      "Android",
-                                                      docData);
-
+            RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,prepareData());
             pd.show();
-            RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,mData);
-
-
-
+            mNetworkData.serverCall();
         }
 
     }
 
 
+
+    public FinalMasterData prepareData(){
+
+        for(int pos=0;pos<listViewItems.size();pos++){
+            ItemObjects mObj=listViewItems.get(pos);
+            ItemContentData mFinal=new ItemContentData(mObj.getName()+".png",
+                    UtilEncodeDecodeBase64.encodeImageToBase64(mObj.getPhoto().toString()),mObj.getName());
+            mFinalData.add(mFinal);
+        }
+
+
+        FinalMasterData mData=new FinalMasterData(AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_PHONE_NUMBER,null),
+                AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_USER_NAME,null),
+                "",
+                context.getResources().getString(R.string.os_type),
+                mFinalData);
+
+        return mData;
+
+    }
 
 
     public void addDocument(int position) {
@@ -298,32 +288,22 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         selectImage(position+1);
     }
 
-
-
-
     @Override
-    public void masterData(Bundle bundle) {
-
-    }
-
-    @Override
-    public void isNewUser(boolean isNewUser) {
+    public void isNewUser(boolean isNewUser, ResponseData mData) {
         pd.dismiss();
-
-        if(isNewUser==true){
-            //New User
-            view.isNewUser(true);
-        }else if(isNewUser==false){
-            //Existing User
-            view.isNewUser(false);
-        }
-
+        view.isNewUser(isNewUser,mData);
     }
 
     @Override
     public void registrationFailure() {
         pd.dismiss();
         view.registrationFailed();
+    }
+
+    @Override
+    public void setLocalData(String mTolken) {
+        AppController.getSharedPreferences().edit().putString(ConstantsSharedPreferences.STRING_AUTH_TOLKEN,mTolken);
+        AppController.getSharedPreferences().edit().putBoolean(ConstantsSharedPreferences.BOOL_IS_USER_REGISTERED,true);
     }
 
 

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.seatcorporation.seat.Constants.Constants;
+import com.seatcorporation.seat.Models.ResponseData;
 import com.seatcorporation.seat.Pages.Home.Adapters.AdptDocNames;
 import com.seatcorporation.seat.Pages.Home.Adapters.Adpt_home;
 import com.seatcorporation.seat.Pages.Home.Interfaces.IntHomeView;
@@ -44,23 +45,11 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         presenter= new PresenterHome(this,spnDocsId);
     }
 
-    @Override
-    public void homeSuccess() {
-
-    }
-
-    @Override
-    public void homeFailure() {
-
-    }
-
 
     @OnClick(R.id.btnUpload)
     public void uploadData() {
-
         //Start Upload Process
         presenter.uploadData();
-
     }
 
 
@@ -91,27 +80,20 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         grid_view.setAdapter(adapter);
     }
 
-
-
-    @Override
-    public void refreshRecyclerView() {
-        //grid_view.data
-    }
-
     @Override
     public void displayTheProofNameToBeShown(String mName) {
         UtilSnackbar.showSnakbarTypeOne(rootView,"Please add " + mName);
     }
 
     @Override
-    public void isNewUser(boolean isNewUser) {
+    public void isNewUser(boolean isNewUser, ResponseData mData) {
 
         if(isNewUser==true){
             //New User
-            UtilSnackbar.showSnakbarTypeOne(rootView,"User Registered");
+            UtilSnackbar.showSnakbarTypeOne(rootView,mData.getErrorMessage());
         }else if(isNewUser==false){
             //Existing User
-            UtilSnackbar.showSnakbarTypeOne(rootView,"Already Registered");
+            UtilSnackbar.showSnakbarTypeOne(rootView,mData.getErrorMessage());
         }
 
     }
@@ -119,8 +101,10 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
     @Override
     public void registrationFailed() {
         //Registration Failed
-        UtilSnackbar.showSnakbarTypeOne(rootView,"Registration Failed");
+        UtilSnackbar.showSnakbarTypeOne(rootView,getResources().getString(R.string.txt_reg_failure));
     }
+
+
 
 
     @Override

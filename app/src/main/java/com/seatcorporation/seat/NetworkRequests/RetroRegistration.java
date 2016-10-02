@@ -1,6 +1,5 @@
 package com.seatcorporation.seat.NetworkRequests;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.seatcorporation.seat.Models.FinalMasterData;
@@ -8,8 +7,6 @@ import com.seatcorporation.seat.Models.ResponseData;
 import com.seatcorporation.seat.Pages.Home.Interfaces.InterMasterData;
 import com.seatcorporation.seat.Retrofit.ApiClient;
 import com.seatcorporation.seat.Retrofit.ApiInterface;
-
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,29 +19,18 @@ import retrofit2.Response;
 public class RetroRegistration {
 
     private InterMasterData listener;
-    String mCode;
     FinalMasterData mdata;
 
     public RetroRegistration(InterMasterData listener, FinalMasterData mdata){
         this.listener=listener;
         this.mdata=mdata;
-        serverCallForOtp(mdata);
     }
 
-    public void serverCallForOtp(FinalMasterData mdata) {
+    public void serverCall() {
 
-        final Bundle bundle = new Bundle();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        HashMap<String,String> mMap=new HashMap<>();
-        mMap.put("phone_number",mdata.getPhone_number());
-        mMap.put("name",mdata.getName());
-        mMap.put("device_id",mdata.getDevice_id());
-        mMap.put("os_type",mdata.getOs_type());
-        mMap.put("documents",mdata.getDocuments());
-
-        Call<ResponseData> call = apiService.masterData(mMap);
-
+        Call<ResponseData> call = apiService.masterData(mdata);
 
         call.enqueue(new Callback<ResponseData>() {
             @Override
@@ -55,13 +41,11 @@ public class RetroRegistration {
                     failureDataResponse();
                 }else{
                     if(response.isSuccessful()){
-                        successDataResponse(mData,true);
+                        successDataResponse(mData,mData.getToken());
                     }else{
                         failureDataResponse();
                     }
                 }
-
-
 
             }
 
@@ -69,20 +53,16 @@ public class RetroRegistration {
                 listener.registrationFailure();
             }
 
-            private void successDataResponse(ResponseData mBundleData,boolean isSuccess) {
+            private void successDataResponse(ResponseData mBundleData,String mTolken) {
 
                 if(mBundleData.getErrorCode()==201){
                     //Already Registered
-                    listener.isNewUser(false);
+                    listener.isNewUser(false,mBundleData);
                 }else if(mBundleData.getErrorCode()==200){
                     //Registration Successful
-                    listener.isNewUser(true);
+                    listener.setLocalData(mTolken);
+                    listener.isNewUser(true,mBundleData);
                 }
-
-                bundle.putParcelable("data", mBundleData);
-                bundle.putBoolean("isSuccess", isSuccess);
-                listener.masterData(bundle);
-
 
             }
 
@@ -92,10 +72,6 @@ public class RetroRegistration {
                 failureDataResponse();
             }
 
-
         });
-
-
     }
-
 }

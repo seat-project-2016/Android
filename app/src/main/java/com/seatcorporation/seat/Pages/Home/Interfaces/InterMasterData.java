@@ -1,6 +1,6 @@
 package com.seatcorporation.seat.Pages.Home.Interfaces;
 
-import android.os.Bundle;
+import com.seatcorporation.seat.Models.ResponseData;
 
 /**
  * Created by Devrath on 27-09-2016.
@@ -8,10 +8,10 @@ import android.os.Bundle;
 
 public interface InterMasterData {
 
-    public void masterData(Bundle bundle);
-
-    public void isNewUser(boolean isNewUser);
+    public void isNewUser(boolean isNewUser, ResponseData mData);
 
     public void registrationFailure();
+
+    public void setLocalData(String mTolken);
 
 }
