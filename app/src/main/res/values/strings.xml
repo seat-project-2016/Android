@@ -23,7 +23,9 @@
     <string name="doc_name_select">Select a document</string>
     <string name="doc_name_yourpic">Your Pic</string>
     <string name="doc_name_driving_licence">Driving Licence</string>
-    <string name="doc_name_taxi_pic">Taxi Pic</string>
+    <string name="doc_name_taxi_pic">Tax Paid Pic</string>
+    <string name="doc_name_rc_pic">RC Pic</string>
+    <string name="doc_name_insurance_pic">Insurance Pic</string>
     <!-- DOCUMENT NAMES -->
 
     <string name="select_image">Select Image</string>

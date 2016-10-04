@@ -6,6 +6,8 @@
         <item>@drawable/user</item>
         <item>@drawable/licence</item>
         <item>@drawable/car</item>
+        <item>@drawable/licence</item>
+        <item>@drawable/car</item>
     </integer-array>
 
     <array name="doc_names">
@@ -13,6 +15,8 @@
         <item>@string/doc_name_yourpic</item>
         <item>@string/doc_name_driving_licence</item>
         <item>@string/doc_name_taxi_pic</item>
+        <item>@string/doc_name_rc_pic</item>
+        <item>@string/doc_name_insurance_pic</item>
     </array>
 
 </resources>
