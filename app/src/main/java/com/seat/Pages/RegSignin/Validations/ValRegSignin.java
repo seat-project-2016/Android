@@ -10,7 +10,7 @@ public class ValRegSignin {
    /* FirebaseAuth auth;
     FirebaseUser user;
 
-    public ValRegistration(FirebaseAuth auth, FirebaseUser user){
+    public ValLogin(FirebaseAuth auth, FirebaseUser user){
         this.auth=auth;
         this.user=user;
     }

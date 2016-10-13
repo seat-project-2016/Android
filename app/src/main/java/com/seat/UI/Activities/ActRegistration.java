@@ -44,7 +44,7 @@ public class ActRegistration extends AppCompatActivity implements IntRegistratio
 
     @OnClick(R.id.btn_login)
     public void registration() {
-         //SignUp to server
+        //SignUp to server
         presenter.attemptRegister(edt_name_id.getText().toString(),
                 edt_phone_id.getText().toString());
     }

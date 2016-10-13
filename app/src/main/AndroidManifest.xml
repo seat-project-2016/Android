@@ -49,6 +49,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
+
+        <activity android:name=".UI.Activities.ActLogin"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+
         <activity android:name=".UI.Activities.ActHome"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">

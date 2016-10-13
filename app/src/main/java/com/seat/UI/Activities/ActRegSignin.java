@@ -48,7 +48,7 @@ public class ActRegSignin extends AppCompatActivity implements IntRegSigninView 
 
     @OnClick(R.id.btn_signin_id)
     public void signIn() {
-
+        UtilActivitiesNavigation.startActivityWithBackStackClear(ActRegSignin.this, ActLogin.class);
     }
 
 

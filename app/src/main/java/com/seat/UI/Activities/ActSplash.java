@@ -53,6 +53,7 @@ public class ActSplash extends AppCompatActivity implements IntSplashView {
 
     @Override
     public void registeredCheckSuccess(boolean mVal, String mMsg) {
+
         UtilActivitiesNavigation.startActivityWithClassDataWithBackStackClear(ActSplash.this, ActMessage.class,mMsg);
     }
 

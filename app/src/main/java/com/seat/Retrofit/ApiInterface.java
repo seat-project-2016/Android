@@ -1,6 +1,7 @@
 package com.seat.Retrofit;
 
 import com.seat.Models.FinalMasterData;
+import com.seat.Models.LoginData;
 import com.seat.Models.ResponseData;
 import com.seat.Models.ResponseUserRegd;
 import com.seat.Models.UserRegdData;
@@ -22,6 +23,8 @@ public interface ApiInterface {
     Call<ResponseUserRegd> masterUserRegd(@Body UserRegdData body);
 
 
+    @POST("login")
+    Call<ResponseData> loginData(@Body LoginData body);
 
 
 

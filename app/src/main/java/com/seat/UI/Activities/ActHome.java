@@ -59,6 +59,26 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         //Set up Toolbar
         initToolbar();
         presenter = new PresenterHome(this, spnDocsId);
+
+        /*TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(findViewById(R.id.action_upload), "This is a target", "We have the best targets, believe me")
+                        // All options below are optional
+                        .outerCircleColor(R.color.amber_400)      // Specify a color for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .textColor(R.color.colorPrimary)            // Specify a color for text
+                        //.textTypeFace(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)  ,                 // Whether to tint the target view's color
+                        //.icon(Drawable),                    // Specify a custom drawable to draw as the target
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        //doSomething();
+                    }
+                });*/
     }
 
     private void initToolbar() {

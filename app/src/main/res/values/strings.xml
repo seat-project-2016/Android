@@ -34,6 +34,7 @@
     <string name="txt_loading">Loading</string>
     <string name="txt_reg_failure">Registration Failure</string>
     <string name="txt_upload">Upload</string>
+    <string name="login_failure">Login Failure</string>
 
     <string name="txt_press_back_to_exit">Press back again to exit</string>
 
