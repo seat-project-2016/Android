@@ -36,12 +36,34 @@
     </LinearLayout>
 
 
-    <Button
-        android:text="Login"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:textColor="@android:color/white"
-        android:id="@+id/btnLoginId" />
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/regsignin_register"
+            android:layout_weight="1"
+            android:id="@+id/btn_reg_id"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"/>
+        <Button
+            android:id="@+id/btnLoginId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"
+            android:text="@string/regsignin_signin"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

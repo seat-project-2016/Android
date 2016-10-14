@@ -8,6 +8,15 @@ import android.content.Intent;
  */
 public class UtilActivitiesNavigation {
 
+    /**********************************StartActivity ******************************/
+    public static void startActivity(Activity mSourceActivity, Class<?> mDestinationActivity) {
+        Intent mIntent  = new Intent(mSourceActivity,mDestinationActivity);
+        mSourceActivity.startActivity(mIntent);
+        mSourceActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+    /**********************************StartActivity ******************************/
+
+
 
     /**********************************StartActivity ******************************/
     public static void startActivityWithBackStackClear(Activity mSourceActivity, Class<?> mDestinationActivity) {

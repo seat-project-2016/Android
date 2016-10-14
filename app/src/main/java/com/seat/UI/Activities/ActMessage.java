@@ -45,6 +45,15 @@ public class ActMessage extends AppCompatActivity {
         finish();
     }
 
+    @OnClick(R.id.btn_reg_id)
+    public void register() {
+        UtilActivitiesNavigation.startActivityWithBackStackClear(ActMessage.this, ActRegistration.class);
+        finish();
+    }
+
+
+
+
     private void getDataFromPrevScreen() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

@@ -41,14 +41,13 @@ public class ActRegSignin extends AppCompatActivity implements IntRegSigninView 
 
     @OnClick(R.id.btn_reg_id)
     public void registration() {
-        UtilActivitiesNavigation.startActivityWithBackStackClear(ActRegSignin.this, ActRegistration.class);
-        finish();
+        UtilActivitiesNavigation.startActivity(ActRegSignin.this, ActRegistration.class);
     }
 
 
     @OnClick(R.id.btn_signin_id)
     public void signIn() {
-        UtilActivitiesNavigation.startActivityWithBackStackClear(ActRegSignin.this, ActLogin.class);
+        UtilActivitiesNavigation.startActivity(ActRegSignin.this, ActLogin.class);
     }
 
 
