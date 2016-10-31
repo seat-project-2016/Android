@@ -56,7 +56,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
     List<ItemContentData> mFinalData;
     ProgressDialog pd;
     Activity mActivity;
-
+    FinalMasterData mData;
 
     public PresenterHome(ActHome view, Spinner spnDocsId) {
 
@@ -66,6 +66,14 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         this.context=view;
         this.spnDocsId=spnDocsId;
 
+
+
+        initializePresenter();
+
+    }
+
+
+    public void initializePresenter(){
         mFinalData=new LinkedList<>();
 
         //Presentation Logic
@@ -74,7 +82,6 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         mValHome=new ValHome();
 
         setUpProgress();
-
     }
 
 
@@ -268,7 +275,8 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
             }
         }else{
             //Continue with the flow
-            RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,prepareData());
+            FinalMasterData myData=prepareData();
+            RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,myData);
             pd.show();
             mNetworkData.serverCall();
         }
@@ -287,7 +295,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         }
 
 
-        FinalMasterData mData=new FinalMasterData(AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_PHONE_NUMBER,null),
+        mData=new FinalMasterData(AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_PHONE_NUMBER,null),
                 AppController.getSharedPreferences().getString(ConstantsSharedPreferences.STRING_USER_NAME,null),
                 "",
                 context.getResources().getString(R.string.os_type),
@@ -313,6 +321,7 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
     public void registrationFailure() {
         pd.dismiss();
         view.registrationFailed();
+        initializePresenter();
     }
 
     @Override
