@@ -167,6 +167,11 @@ public class ActHome extends AppCompatActivity implements IntHomeView {
         UtilSnackbar.showSnakbarTypeOne(rootView, getResources().getString(R.string.txt_reg_failure));
     }
 
+    @Override
+    public void notOnline() {
+        UtilSnackbar.showSnakbarTypeOne(rootView, getResources().getString(R.string.conn_noconnectivity));
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {

@@ -1,5 +1,7 @@
 package com.seat.Pages.Home.Validations;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import com.seat.Models.ItemObjects;
 
 import java.util.LinkedList;
@@ -34,7 +36,18 @@ public class ValHome {
     }
 
 
-
+    public boolean isOnline(Context mContext)
+    {
+        try
+        {
+            ConnectivityManager cm = (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            return cm.getActiveNetworkInfo().isConnectedOrConnecting();
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
 
 
 

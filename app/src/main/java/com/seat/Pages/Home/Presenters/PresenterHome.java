@@ -276,9 +276,17 @@ public class PresenterHome implements AdapterView.OnItemSelectedListener,InterMa
         }else{
             //Continue with the flow
             FinalMasterData myData=prepareData();
-            RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,myData);
-            pd.show();
-            mNetworkData.serverCall();
+
+            if(mValHome.isOnline(mActivity)){
+                RetroRegistration mNetworkData=new RetroRegistration(PresenterHome.this,myData);
+                pd.show();
+                mNetworkData.serverCall();
+            }else{
+                //Show Not online message
+                view.notOnline();
+            }
+
+
         }
 
     }

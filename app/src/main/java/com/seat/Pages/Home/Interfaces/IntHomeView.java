@@ -18,4 +18,5 @@ public interface IntHomeView {
     void displayTheProofNameToBeShown(String mName);
     void isNewUser(boolean isNewUser, ResponseData mData);
     void registrationFailed();
+    void notOnline();
 }
